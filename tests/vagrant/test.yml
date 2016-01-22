@@ -1,0 +1,22 @@
+---
+
+- name: Test Datadog role
+  hosts: all
+
+  pre_tasks:
+    - name: Update apt
+      become: yes
+      apt:
+        cache_valid_time: 1800
+        update_cache: yes
+      tags:
+        - build
+
+  roles:
+    - name: ansible-city.datadog
+
+  post_tasks:
+    - name: Datadog should be installed
+      command: dd-agent configcheck
+      tags:
+        - assert

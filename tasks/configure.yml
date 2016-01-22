@@ -1,0 +1,25 @@
+---
+
+- name: Configure agent
+  become: yes
+  template:
+    src: datadog.conf.j2
+    dest: /etc/dd-agent/datadog.conf
+  notify:
+    - restart datadog
+
+- name: Enable any integrations
+  become: yes
+  template:
+    src: conf.d/{{ item.key }}.yaml.j2
+    dest: /etc/dd-agent/conf.d/{{ item.key }}.yaml
+    owner: dd-agent
+  with_dict: datadog.integrations
+  notify:
+    - restart datadog
+
+- name: Ensure datadog agent state
+  become: yes
+  service:
+    name: datadog-agent
+    state: "{{ 'started' if datadog.enabled else 'stopped' }}"

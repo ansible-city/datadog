@@ -1,0 +1,9 @@
+---
+
+datadog:
+  api_key: no-key-in-datadog.api_key
+  dd_url: https://app.datadoghq.com
+  enabled: yes
+  tags: [ ]
+  default_tags: [ ]
+  integrations: { }
