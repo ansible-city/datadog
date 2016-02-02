@@ -1,4 +1,4 @@
 ---
 
-- name: ansible-city.datadog
+- src: ansible-city.datadog
   version: v1.0
